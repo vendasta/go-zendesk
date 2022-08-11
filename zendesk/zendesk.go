@@ -67,6 +67,22 @@ type Client interface {
 	UpdateTicket(int64, *Ticket) (*Ticket, error)
 	UpdateUser(int64, *User) (*User, error)
 	UploadFile(string, *string, io.Reader) (*Upload, error)
+	ShowPermissionGroup(int64) (*PermissionGroup, error)
+	CreatePermissionGroup(*PermissionGroup) (*PermissionGroup, error)
+	UpdatePermissionGroup(int64, *PermissionGroup) (*PermissionGroup, error)
+	DeletePermissionGroup(int64) error
+	ShowCategory(int64) (*Category, error)
+	CreateCategory(*Category) (*Category, error)
+	UpdateCategory(int64, *Category) (*Category, error)
+	DeleteCategory(int64) error
+	ShowSection(int64) (*Section, error)
+	CreateSection(int64, *Section) (*Section, error)
+	UpdateSection(int64, *Section) (*Section, error)
+	DeleteSection(int64) error
+	ShowArticle(int64) (*Article, error)
+	CreateArticle(int64, *Article) (*Article, error)
+	UpdateArticle(int64, *Article) (*Article, error)
+	DeleteArticle(int64) error
 }
 
 type RequestFunction func(*http.Request) (*http.Response, error)
@@ -263,8 +279,10 @@ func unmarshall(res *http.Response, out interface{}) error {
 
 // APIPayload represents the payload of an API call.
 type APIPayload struct {
+	Article                    *Article                   `json:"article,omitempty"`
 	Attachment                 *Attachment                `json:"attachment"`
 	Attachments                []Attachment               `json:"attachments"`
+	Category                   *Category                  `json:"category,omitempty"`
 	Comment                    *TicketComment             `json:"comment,omitempty"`
 	Comments                   []TicketComment            `json:"comments,omitempty"`
 	ComplianceDeletionStatuses []ComplianceDeletionStatus `json:"compliance_deletion_statuses,omitempty"`
@@ -277,6 +295,8 @@ type APIPayload struct {
 	OrganizationMembership     *OrganizationMembership    `json:"organization_membership,omitempty"`
 	OrganizationMemberships    []OrganizationMembership   `json:"organization_memberships,omitempty"`
 	Organizations              []Organization             `json:"organizations,omitempty"`
+	PermissionGroup            *PermissionGroup           `json:"permission_group,omitempty"`
+	Section                    *Section                   `json:"section,omitempty"`
 	Tags                       []string                   `json:"tags,omitempty"`
 	Ticket                     *Ticket                    `json:"ticket,omitempty"`
 	TicketField                *TicketField               `json:"ticket_field,omitempty"`
