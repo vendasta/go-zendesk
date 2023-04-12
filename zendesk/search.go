@@ -68,7 +68,8 @@ func OrganizationFilter(organizationID int) Filters {
 // SearchTickets leverages the unified search api to return tickets
 //
 // Zendesk Core API docs: https://developer.zendesk.com/rest_api/docs/support/search
-func (c *client) SearchTickets(term string, options *ListOptions, filters ...Filters) (*TicketSearchResults, error) {
+// Zendesk Side load API docs: https://developer.zendesk.com/api-reference/ticketing/ticket-management/search/#side-loading
+func (c *client) SearchTickets(term string, options *ListOptions, sideload SideLoad, filters ...Filters) (*TicketSearchResults, error) {
 	params, err := query.Values(options)
 	if err != nil {
 		return nil, err
@@ -83,6 +84,14 @@ func (c *client) SearchTickets(term string, options *ListOptions, filters ...Fil
 		queryString = fmt.Sprintf(`%s /"%s/"`, queryString, term)
 	}
 	params.Set("query", queryString)
+	if sideload != nil {
+		sideLoads := &SideLoadOptions{}
+		sideload(sideLoads)
+		if len(sideLoads.Include) > 0 {
+			params.Set("include", fmt.Sprintf("tickets(%s)", strings.Join(sideLoads.Include, ",")))
+		}
+	}
+
 	out := new(TicketSearchResults)
 	err = c.get(fmt.Sprintf("/api/v2/search.json?%s", params.Encode()), out)
 	if err != nil {

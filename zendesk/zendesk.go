@@ -50,7 +50,7 @@ type Client interface {
 	PermanentlyDeleteUser(int64) (*User, error)
 	RedactCommentString(int64, int64, string) (*TicketComment, error)
 	SearchOrganizationsByExternalID(string) ([]Organization, error)
-	SearchTickets(string, *ListOptions, ...Filters) (*TicketSearchResults, error)
+	SearchTickets(string, *ListOptions, SideLoad, ...Filters) (*TicketSearchResults, error)
 	SearchUsers(string) ([]User, error)
 	SearchUserByExternalID(string) (*User, error)
 	ShowComplianceDeletionStatuses(int64) ([]ComplianceDeletionStatus, error)
@@ -314,6 +314,8 @@ type APIPayload struct {
 // TicketSearchResults represents returned results from the unified search api for type:ticket
 type TicketSearchResults struct {
 	Results      []Ticket `json:"results"`
+	Users        []User   `json:"users,omitempty"`
+	Groups       []Group  `json:"groups,omitempty"`
 	NextPage     *string  `json:"next_page"`
 	PreviousPage *string  `json:"previous_page"`
 	Count        *int64   `json:"count"`
