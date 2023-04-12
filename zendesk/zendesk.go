@@ -50,7 +50,7 @@ type Client interface {
 	PermanentlyDeleteUser(int64) (*User, error)
 	RedactCommentString(int64, int64, string) (*TicketComment, error)
 	SearchOrganizationsByExternalID(string) ([]Organization, error)
-	SearchTickets(string, *ListOptions, SideLoad, ...Filters) (*TicketSearchResults, error)
+	SearchTickets(string, *ListOptions, []SideLoad, ...Filters) (*TicketSearchResults, error)
 	SearchUsers(string) ([]User, error)
 	SearchUserByExternalID(string) (*User, error)
 	ShowComplianceDeletionStatuses(int64) ([]ComplianceDeletionStatus, error)

@@ -18,7 +18,8 @@ func TestSearchTickets(t *testing.T) {
 		SortBy:    "",
 		SortOrder: "",
 	}
-	include := IncludeGroups()
+	include := []SideLoad{IncludeGroups()}
+
 	status := StatusFilter(Status("OPEN"), Equality)
 
 	_, err = client.SearchTickets("", &options, include, status)
