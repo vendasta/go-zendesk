@@ -915,7 +915,7 @@ func (_m *MockClient) SearchOrganizationsByExternalID(_a0 string) ([]Organizatio
 }
 
 // SearchTickets provides a mock function with given fields: _a0, _a1, _a2, _a3
-func (_m *MockClient) SearchTickets(_a0 string, _a1 *ListOptions, _a2 SideLoad, _a3 ...Filters) (*TicketSearchResults, error) {
+func (_m *MockClient) SearchTickets(_a0 string, _a1 *ListOptions, _a2 []SideLoad, _a3 ...Filters) (*TicketSearchResults, error) {
 	_va := make([]interface{}, len(_a3))
 	for _i := range _a3 {
 		_va[_i] = _a3[_i]
@@ -927,10 +927,10 @@ func (_m *MockClient) SearchTickets(_a0 string, _a1 *ListOptions, _a2 SideLoad, 
 
 	var r0 *TicketSearchResults
 	var r1 error
-	if rf, ok := ret.Get(0).(func(string, *ListOptions, SideLoad, ...Filters) (*TicketSearchResults, error)); ok {
+	if rf, ok := ret.Get(0).(func(string, *ListOptions, []SideLoad, ...Filters) (*TicketSearchResults, error)); ok {
 		return rf(_a0, _a1, _a2, _a3...)
 	}
-	if rf, ok := ret.Get(0).(func(string, *ListOptions, SideLoad, ...Filters) *TicketSearchResults); ok {
+	if rf, ok := ret.Get(0).(func(string, *ListOptions, []SideLoad, ...Filters) *TicketSearchResults); ok {
 		r0 = rf(_a0, _a1, _a2, _a3...)
 	} else {
 		if ret.Get(0) != nil {
@@ -938,7 +938,7 @@ func (_m *MockClient) SearchTickets(_a0 string, _a1 *ListOptions, _a2 SideLoad, 
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(string, *ListOptions, SideLoad, ...Filters) error); ok {
+	if rf, ok := ret.Get(1).(func(string, *ListOptions, []SideLoad, ...Filters) error); ok {
 		r1 = rf(_a0, _a1, _a2, _a3...)
 	} else {
 		r1 = ret.Error(1)
